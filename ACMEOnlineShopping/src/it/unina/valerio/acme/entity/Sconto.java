@@ -3,22 +3,26 @@ package it.unina.valerio.acme.entity;
 import java.util.Date;
 
 public class Sconto {
-	private int ID;
+	@SuppressWarnings("unused")
+	private String codice;
 	private int percentuale;
 	private Date dataScadenza;
-	//private int IDCliente;
-	public Sconto(int ID, int percentuale, Date dataScadenza)
+	
+	public Sconto(String codice, int percentuale, Date dataScadenza)
 	{
-		this.ID=ID;
+		this.codice=codice;
+		if(percentuale<=0 || percentuale>100)
+		{
+			System.err.println("Valore di sconto "+percentuale+" non valido!");
+			return;
+		}
 		this.percentuale=percentuale;
 		this.dataScadenza=dataScadenza;
-	//	this.IDCliente=c.getID();
 	}
-	
-	//public int getIdCliente()
-	//{
-	//	return IDCliente;
-	//}
+
+	public Date getDataScadenza() {
+		return dataScadenza;
+	}
 
 	public int getPercentuale() {
 		return percentuale;

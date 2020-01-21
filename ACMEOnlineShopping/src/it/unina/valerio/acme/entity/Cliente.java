@@ -1,12 +1,14 @@
 package it.unina.valerio.acme.entity;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
-import it.unina.valerio.acme.control.GestoreCliente;
 
 public class Cliente {
 	public static int contID = 0;
+	private int ID;
+	private boolean habitual;
+	private ArrayList<Sconto> sconti;
+
 	@SuppressWarnings("unused")
 	private String nomeUtente;
 	@SuppressWarnings("unused")
@@ -15,10 +17,6 @@ public class Cliente {
 	private String numeroTelefono;
 	@SuppressWarnings("unused")
 	private String cartaCredito;
-	private int ID;
-	private boolean habitual;
-	// private ArrayList<Sconto> ;
-	private Stack<Sconto> sconti;
 
 	public Cliente(String nomeUtente, String password, String numeroTelefono, String cartaCredito) {
 		this.nomeUtente = nomeUtente;
@@ -27,49 +25,56 @@ public class Cliente {
 		this.cartaCredito = cartaCredito;
 		this.ID = contID++;
 		this.habitual = false;
-		this.sconti = new Stack<Sconto>();
+		this.sconti = new ArrayList<Sconto>();
 	}
 
-	public int getID() {
-		return ID;
-	}
-	public void addSconto( Sconto s) {
-		if (this.habitual && s.getPercentuale() > 0 && s.getPercentuale() <= 100)
-			this.sconti.push(s);
-	}
-
-	public Sconto getSconto() {
-		if (this.habitual && !sconti.isEmpty())
-			return this.sconti.pop();
-		else
-			return new Sconto(1, 0, null);
+	public void addSconto(Sconto sconto) {
+		if (this.habitual)
+			this.sconti.add(sconto);
+		//else
+		//	System.err.println("Errore nell'aggiunta dello sconto! Cliente non è abituale!");
 	}
 
-	public int getNumSpese() {
+	public void removeSconto(Sconto sconto) {
+		this.sconti.remove(sconto);
+	}
+
+
+	public int getNumSpese(ArrayList<Spesa> lista_spese) {
 		int numSpese = 0;
-		for (Spesa s : GestoreCliente.lista_spese) {
-			if (s.getIdCliente() == this.ID) {
+		for (Spesa s : lista_spese) {
+			//confronto i riferimenti
+			//equals(this) è un opzione
+			if (s.getClient()==this) {
 				numSpese++;
 			}
 		}
 		return numSpese;
 	}
 
-	public float getSpesaTotale() {
+
+	public ArrayList<Sconto> getSconti() {
+		return sconti;
+	}
+	
+	public float getSpesaTotale(ArrayList<Spesa> lista_spese) {
 		float money = 0;
-		for (Spesa s : GestoreCliente.lista_spese) {
-			if (s.getIdCliente() == this.ID) {
+		for (Spesa s : lista_spese) {
+			//confronto i riferimenti
+			//equals(this) è un opzione
+			if (s.getClient()==this) {
 				money += s.getCosto();
 			}
 		}
 		return money;
 	}
 
-	public boolean isHabitual() {
-		return habitual;
+	public int getID() {
+		return ID;
 	}
 
 	public void setHabitual(boolean habitual) {
 		this.habitual = habitual;
 	}
+
 }

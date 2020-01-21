@@ -3,86 +3,85 @@ package it.unina.valerio.acme.entity;
 import java.util.ArrayList;
 import java.util.Date;
 
-import it.unina.valerio.acme.control.GestoreCliente;
 
 public class Spesa {
 	public static int N = 1;
 	private static int contID = 0;
-	@SuppressWarnings("unused")
-	private int ID;
-	@SuppressWarnings("unused")
-	private Date data;
 	private float costo;
+	//private int IDCliente;
+	
+	//riferimenti
+	private Cliente cliente;
+	@SuppressWarnings("unused")
+	private Sconto sconto;
+
 	@SuppressWarnings("unused")
 	private ArrayList<Prodotto> prodotti;
 	@SuppressWarnings("unused")
 	private ArrayList<Integer> quantitaProdotti;
-	private int IDCliente;
+	@SuppressWarnings("unused")
+	private int ID;
+	@SuppressWarnings("unused")
+	private Date data;
 	
+	//2 costruttori: con e senza sconto
+	public Spesa(Date data, ArrayList<Prodotto> prodotti, ArrayList<Integer> quantitaProdotti, Cliente cliente) {
+		this.cliente = cliente;
+		this.ID = contID++;
+		this.data = data;
+		this.prodotti = prodotti;
+		this.quantitaProdotti = quantitaProdotti;
+		this.costo = calcolaCostoTotale(prodotti, quantitaProdotti);
+	}
+
+	public Spesa(Date data, ArrayList<Prodotto> prodotti, ArrayList<Integer> quantitaProdotti, Cliente cliente, Sconto sconto) {
+		this.cliente = cliente;
+		this.ID = contID++;
+		this.data = data;
+		this.prodotti = prodotti;
+		this.quantitaProdotti = quantitaProdotti;
+		
+		this.sconto=sconto;
+		float tempCosto=calcolaCostoTotale(prodotti, quantitaProdotti);
+		this.costo=tempCosto;
+		if(cliente.getSconti().contains(sconto))
+		{
+			if(sconto.getDataScadenza().compareTo(data)>0)
+			{
+				this.costo = calcolaCostoScontato(cliente,tempCosto,sconto);
+				//System.out.println("Costo finale= "+tempCosto+" COsto finale scontato: "+costo + " del "+sconto.getPercentuale()+"%");
+			}else
+			{
+				System.err.println("Sconto scaduto! Inutilizzabile! Lo sconto non viene applicato al costo totale..");
+				//this.costo=tempCosto;
+			}
+		}
+	}
 	
-	private Cliente cliente;
+	public float calcolaCostoTotale(ArrayList<Prodotto> prodotti, ArrayList<Integer> quantita) {
+		float costo = 0;
+		for (int i = 0; i < prodotti.size(); i++) {
+			costo += prodotti.get(i).getPrezzo() * quantita.get(i);
+		}
+		return costo;
+	}
 	
-	
-	GestoreCliente gestoreCliente = new GestoreCliente();
-	private boolean applicaSconto;
+	public float calcolaCostoScontato(Cliente cliente, float costo, Sconto sconto)
+	{
+		//applica sconto
+		float out = costo*(100-sconto.getPercentuale())/100;
+		//System.out.println("AA"+out);
+		//rimuovi lo sconto dalla lista degli sconti del cliente
+		cliente.removeSconto(sconto);
+		return out;
+	}
+	public float getCosto() {
+		return costo;
+	}
 
 	public Cliente getClient()
 	{
 		return cliente;
 	}
-	public Spesa(Date data, ArrayList<Prodotto> prodotti, ArrayList<Integer> quantitaProdotti, Cliente c,
-			boolean applicaSconto) {
-		if (IDCliente < Cliente.contID) {
-			this.IDCliente = c.getID();
-		} else {
-			System.err.println("ERROR: IDCliente " + IDCliente + " non esiste! Spesa non instanziata!");
-			return;
-		}
-		this.ID = contID++;
-		this.data = data;
-		this.prodotti = prodotti;
-		this.quantitaProdotti = quantitaProdotti;
-		this.cliente=c;
-		/*System.out.println(c.getNumSpese());
-		if(c.getNumSpese()>Spesa.N)
-		{
-			System.out.println("test");
-			c.setHabitual(true);
-		}*/
-		this.applicaSconto = applicaSconto;
-		this.costo = calcolaCostoTotale(c, prodotti, quantitaProdotti);
-	}
 
-	public float calcolaCostoTotale(Cliente c, ArrayList<Prodotto> p, ArrayList<Integer> q) {
-		float costo = 0;
-		for (int i = 0; i < p.size(); i++) {
-			costo += p.get(i).getPrezzo() * q.get(i);
-		}
-		/*System.out.println(c.isHabitual());
-		if (c.isHabitual() && applicaSconto) {
-			System.out.println("test");
-			// applica sconto
-			//costo = gestoreCliente.inserisciSconto(costo, c);
-		}*/
-		return costo;
-	}
-
-	public int getIdCliente() {
-		return IDCliente;
-	}
-
-	
-	public float getCosto() {
-		return costo;
-	}
-
-	public boolean getApplicaSconto() {
-		// TODO Auto-generated method stub
-		return applicaSconto;
-	}
-
-	public void setCosto(float costo) {
-		this.costo=costo;
-		
-	}
 }
