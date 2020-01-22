@@ -118,28 +118,7 @@ public class GestoreReportTest {
 
 	// TestCaseID:6
 	@Test
-	public void testNPositivoListaClienteNonVuotaListaSpeseNonVuotaNSpesePositivoGreaterNSpesaTotale0()
-			throws NegativePriceException {
-		Spesa.N=1;
-
-		Cliente cliente = new Cliente("Valerio", "test123", "+39 5133311231", "4125 6231 1252 5123");
-		gestoreCliente.registraCliente(lista_clienti, cliente);
-
-		Prodotto p1 = new Prodotto("Detersivo", "Detersivo per lavastoviglie", 1, 50);
-		prodotti1.add(p1);
-		quantita1.add(1);
-		gestoreCliente.registraSpesa(lista_spese, new Spesa(Main.dateOf("23/01/2020"), prodotti1, quantita1, cliente));
-
-		Report actual = gestoreReport.generaReport(Spesa.N, lista_clienti, lista_spese);
-		r.addRecord(0, 1, 1.0F);
-		//gestoreReport.visualizzaReport(r);
-		// gestoreReport.visualizzaReport(actual);
-		assertEquals(r.toString(), actual.toString());
-	}
-
-	// TestCaseID:7
-	@Test
-	public void testN0ListaClienteNonVuotaListaSpeseNonVuotaNSpesePositivoGreaterNSpesaTotale0()
+	public void testN0ListaClienteNonVuotaListaSpeseNonVuotaNSpesePositivoGreaterNSpesaTotalePositiva()
 			throws NegativePriceException {
 		Spesa.N=0;
 		Cliente cliente1 = new Cliente("Valerio", "test123", "+39 5133311231", "4125 6231 1252 5123");
@@ -161,7 +140,7 @@ public class GestoreReportTest {
 		assertEquals(r.toString(), actual.toString());
 	}
 	
-	// TestCaseID:8
+	// TestCaseID:7
 	@Test
 	public void testNNegativoListaClienteVuotaListaSpeseVuotaNSpese0NSpesaTotale0()
 			throws NegativePriceException {
@@ -175,7 +154,7 @@ public class GestoreReportTest {
 		assertEquals(r.toString(), actual.toString());
 	}
 	
-	// TestCaseID:9.1
+	// TestCaseID:8.1
 	@Test
 	public void testNPositivoListaClienteNonVuotaListaSpeseNonVuotaNSpesePositivoNSpesaTotalePositivaScontoPresente()
 			throws NegativePriceException {
@@ -253,7 +232,7 @@ public class GestoreReportTest {
 		assertEquals(r.toString(), actual.toString());
 	}
 	
-	// TestCaseID:9.2
+	// TestCaseID:8.2
 		@Test
 		public void testNPositivoListaClienteNonVuotaListaSpeseNonVuotaNSpesePositivoNSpesaTotalePositivaScontoScaduto()
 				throws NegativePriceException {
