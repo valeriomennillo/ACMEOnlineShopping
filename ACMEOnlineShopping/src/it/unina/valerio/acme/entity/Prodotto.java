@@ -1,5 +1,7 @@
 package it.unina.valerio.acme.entity;
 
+import it.unina.valerio.acme.exception.NegativePriceException;
+
 public class Prodotto {
 	private static int contID=0;
 	@SuppressWarnings("unused")

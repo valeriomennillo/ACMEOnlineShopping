@@ -1,4 +1,4 @@
-package it.unina.valerio.acme.entity;
+package it.unina.valerio.acme.exception;
 
 public class NegativePriceException extends Exception {
 	//Prodotto istanziato con prezzo negativo exception!

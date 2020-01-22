@@ -9,15 +9,16 @@ import java.util.Date;
 import it.unina.valerio.acme.control.GestoreCliente;
 import it.unina.valerio.acme.control.GestoreReport;
 import it.unina.valerio.acme.entity.Cliente;
-import it.unina.valerio.acme.entity.NegativePriceException;
 import it.unina.valerio.acme.entity.Prodotto;
 import it.unina.valerio.acme.entity.Sconto;
 import it.unina.valerio.acme.entity.Spesa;
+import it.unina.valerio.acme.exception.NegativePriceException;
 
 public class Main {
 
 	public static void main(String[] args) {
-		/*
+		
+		Spesa.N=2;
 		// istanza dei controller
 		GestoreReport gestoreReport = new GestoreReport();
 		GestoreCliente gestoreCliente = new GestoreCliente();
@@ -87,7 +88,7 @@ public class Main {
 		gestoreCliente.registraSpesa(lista_spese,new Spesa(now, prodotti2, quantita2, c2, sconto2));
 
 		gestoreReport.visualizzaReport(gestoreReport.generaReport(Spesa.N,lista_clienti,lista_spese));
-		*/
+		
 	}
 	
 	public static Date dateOf(String toParseString)

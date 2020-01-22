@@ -13,7 +13,7 @@ public class Sconto {
 		this.codice=codice;
 		if(percentuale<=0 || percentuale>100)
 		{
-			System.err.println("Valore di sconto "+percentuale+" non valido!");
+			System.err.println("Valore di sconto "+percentuale+"% non valido!");
 			return;
 		}
 		this.percentuale=percentuale;

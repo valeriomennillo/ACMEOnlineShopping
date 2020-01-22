@@ -5,10 +5,9 @@ import java.util.Date;
 
 
 public class Spesa {
-	public static int N = 1;
+	public static int N;
 	private static int contID = 0;
 	private float costo;
-	//private int IDCliente;
 	
 	//riferimenti
 	private Cliente cliente;
@@ -42,19 +41,22 @@ public class Spesa {
 		this.quantitaProdotti = quantitaProdotti;
 		
 		this.sconto=sconto;
-		float tempCosto=calcolaCostoTotale(prodotti, quantitaProdotti);
-		this.costo=tempCosto;
+		//float oldCosto=calcolaCostoTotale(prodotti, quantitaProdotti);
+		//this.costo=oldCosto;
+		this.costo=calcolaCostoTotale(prodotti, quantitaProdotti);
 		if(cliente.getSconti().contains(sconto))
 		{
 			if(sconto.getDataScadenza().compareTo(data)>0)
 			{
-				this.costo = calcolaCostoScontato(cliente,tempCosto,sconto);
-				//System.out.println("Costo finale= "+tempCosto+" COsto finale scontato: "+costo + " del "+sconto.getPercentuale()+"%");
+				//this.costo = oldCosto
+				this.costo = calcolaCostoScontato(cliente,this.costo,sconto);
 			}else
 			{
-				System.err.println("Sconto scaduto! Inutilizzabile! Lo sconto non viene applicato al costo totale..");
-				//this.costo=tempCosto;
+				//System.err.println("Sconto scaduto! Inutilizzabile! Lo sconto non viene applicato al costo totale..");
 			}
+		}else
+		{
+			//System.err.println("Il Cliente non possiede quello sconto! Non viene applicato nessuno sconto.");
 		}
 	}
 	
@@ -68,10 +70,7 @@ public class Spesa {
 	
 	public float calcolaCostoScontato(Cliente cliente, float costo, Sconto sconto)
 	{
-		//applica sconto
 		float out = costo*(100-sconto.getPercentuale())/100;
-		//System.out.println("AA"+out);
-		//rimuovi lo sconto dalla lista degli sconti del cliente
 		cliente.removeSconto(sconto);
 		return out;
 	}

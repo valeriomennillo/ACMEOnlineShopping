@@ -21,7 +21,6 @@ public class GestoreReport {
 		}catch(NullPointerException e){
 			//e.printStackTrace();
 		}
-			//System.out.println(c.getN)
 		return R;
 	}
 
