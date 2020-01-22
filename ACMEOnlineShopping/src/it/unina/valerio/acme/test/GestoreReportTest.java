@@ -203,9 +203,9 @@ public class GestoreReportTest {
 		quantita2.add(3);
 
 		//sconti
-		Sconto sconto1 = new Sconto("RED DISCOUNT", 66, Main.dateOf("13/12/2021"));
-		Sconto sconto2 = new Sconto("FIRST DISCOUNT", 33, Main.dateOf("13/12/2021"));
-		Sconto sconto3 = new Sconto("80DAYS80DISCOUNT", 80, Main.dateOf("13/12/2022"));
+		Sconto sconto1 = new Sconto("NF0149NF4190H590", 66, Main.dateOf("13/12/2021"));
+		Sconto sconto2 = new Sconto("F0N2NC0IENCQSANI", 33, Main.dateOf("13/12/2021"));
+		Sconto sconto3 = new Sconto("SALKCN3I2ONECSAX", 80, Main.dateOf("13/12/2022"));
 		
 		gestoreCliente.inserisciSconto(c1,sconto3);
 		
@@ -283,8 +283,8 @@ public class GestoreReportTest {
 			quantita2.add(3);
 
 			//sconti
-			Sconto sconto1 = new Sconto("RED DISCOUNT", 66, Main.dateOf("13/12/2019"));
-			Sconto sconto2 = new Sconto("80DAYS80DISCOUNT", 33, Main.dateOf("13/12/2021"));
+			Sconto sconto1 = new Sconto("93B98RVEB89C42BE", 66, Main.dateOf("13/12/2019"));
+			Sconto sconto2 = new Sconto("4389FB9849BEWDSS", 33, Main.dateOf("13/12/2021"));
 			
 			gestoreCliente.registraSpesa(lista_spese,new Spesa(Main.dateOf("13/12/2019"), prodotti1, quantita1, c1));
 			gestoreCliente.registraSpesa(lista_spese,new Spesa(Main.dateOf("23/8/2020"), prodotti1, quantita1, c2));
