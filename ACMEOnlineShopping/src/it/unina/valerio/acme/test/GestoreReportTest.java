@@ -64,7 +64,7 @@ public class GestoreReportTest {
 
 	// TestCaseID:3
 	@Test
-	public void testNPositivoListaClienteNonVuotaListaSpeseNonVuotaNSpese0SpesaTotale0() {
+	public void testNPositivoListaClienteNonVuotaListaSpeseVuotaNSpese0SpesaTotale0() {
 		Spesa.N=1;
 		Report r = new Report();
 		GestoreReport gestoreReport = new GestoreReport();
@@ -72,7 +72,7 @@ public class GestoreReportTest {
 		gestoreCliente.registraCliente(lista_clienti, cliente);
 		Report actual = gestoreReport.generaReport(Spesa.N, lista_clienti, lista_spese);
 		//gestoreReport.visualizzaReport(r);
-		// gestoreReport.visualizzaReport(actual);
+		//gestoreReport.visualizzaReport(actual);
 		assertEquals(r.toString(), actual.toString());
 	}
 
@@ -105,14 +105,13 @@ public class GestoreReportTest {
 		Prodotto p1 = new Prodotto("Detersivo", "Detersivo per lavastoviglie", 5, 50);
 		prodotti1.add(p1);
 		quantita1.add(1);
-
 		gestoreCliente.registraSpesa(lista_spese, new Spesa(Main.dateOf("22/01/2020"), prodotti1, quantita1, cliente));
 		gestoreCliente.registraSpesa(lista_spese, new Spesa(Main.dateOf("23/01/2020"), prodotti1, quantita1, cliente));
 
 		Report actual = gestoreReport.generaReport(Spesa.N, lista_clienti, lista_spese);
 		r.addRecord(0, 2, 10F); // output atteso
 		//gestoreReport.visualizzaReport(r);
-		// gestoreReport.visualizzaReport(actual);
+		 //gestoreReport.visualizzaReport(actual);
 		assertEquals(r.toString(), actual.toString());
 	}
 
